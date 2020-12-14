@@ -2,12 +2,21 @@
 Library  OperatingSystem
 Library  Process
 Library  Collections
+Library  SSHLibrary
 
-Suite Setup    Start vms
-Suite Teardown  Teardown vms
+#Suite Setup    Start vms
+#Suite Teardown  Teardown vms
 *** Variables ***
 
+
 *** Test Cases ***
+Connect to VMs
+    Open Connection  192.168.56.2  alias=vm1  timeout=50s
+    ${output}=  Login With Public Key  oliveruhlar  w_rsa
+    Should Contain  ${output}  Welcome
+    ${stdout}	${stderr}=	Execute Command	echo 'Hello John!'	return_stderr=True
+    Should Be Empty  ${stderr}  msg=${stderr}
+    Log  ${stdout}
 
 *** Keywords ***
 Start vms
