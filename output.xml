@@ -1,15 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 3.2.2 (Python 3.9.0 on win32)" generated="20201214 15:09:13.665" rpa="false">
+<robot generator="Robot 3.2.2 (Python 3.9.0 on win32)" generated="20201215 14:14:53.422" rpa="false">
 <suite id="s1" name="Ssh Connect" source="C:\Users\oliver.uhlar\Desktop\Projects\ssh_library\ssh_connect.robot">
+<kw name="Start vms" type="setup">
+<kw name="Start Process" library="Process">
+<doc>Starts a new process on background.</doc>
+<arguments>
+<arg>C:\\Program Files\\Oracle\\VirtualBox\\VBoxManage.exe</arg>
+<arg>startvm</arg>
+<arg>ubuntu_1</arg>
+<arg>{c0382caa-6ce6-4fd3-aab4-77ea96bff7f7}</arg>
+<arg>--type</arg>
+<arg>headless</arg>
+</arguments>
+<msg timestamp="20201215 14:14:53.550" level="INFO">Starting process:
+"C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" startvm ubuntu_1 {c0382caa-6ce6-4fd3-aab4-77ea96bff7f7} --type headless</msg>
+<status status="PASS" starttime="20201215 14:14:53.550" endtime="20201215 14:14:53.552"></status>
+</kw>
+<kw name="Start Process" library="Process">
+<doc>Starts a new process on background.</doc>
+<arguments>
+<arg>C:\\Program Files\\Oracle\\VirtualBox\\VBoxManage.exe</arg>
+<arg>startvm</arg>
+<arg>ubuntu_2</arg>
+<arg>{c0382caa-6ce6-4fd3-aab4-77ea96bff7f7}</arg>
+<arg>--type</arg>
+<arg>headless</arg>
+</arguments>
+<msg timestamp="20201215 14:14:53.553" level="INFO">Starting process:
+"C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" startvm ubuntu_2 {c0382caa-6ce6-4fd3-aab4-77ea96bff7f7} --type headless</msg>
+<status status="PASS" starttime="20201215 14:14:53.553" endtime="20201215 14:14:53.554"></status>
+</kw>
+<status status="PASS" starttime="20201215 14:14:53.550" endtime="20201215 14:14:53.555"></status>
+</kw>
 <test id="s1-t1" name="Connect to VMs">
 <kw name="Open Connection" library="SSHLibrary">
 <doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
 <arguments>
 <arg>192.168.56.2</arg>
 <arg>alias=vm1</arg>
-<arg>timeout=50s</arg>
 </arguments>
-<status status="PASS" starttime="20201214 15:09:13.952" endtime="20201214 15:09:13.952"></status>
+<status status="PASS" starttime="20201215 14:14:53.556" endtime="20201215 14:14:53.556"></status>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<arguments>
+<arg>2min</arg>
+<arg>10s</arg>
+<arg>Login With Public Key</arg>
+<arg>oliveruhlar</arg>
+<arg>w_rsa</arg>
+</arguments>
+<assign>
+<var>${output}</var>
+</assign>
+<kw name="Login With Public Key" library="SSHLibrary">
+<doc>Logs into the SSH server using key-based authentication.</doc>
+<arguments>
+<arg>oliveruhlar</arg>
+<arg>w_rsa</arg>
+</arguments>
+<msg timestamp="20201215 14:14:53.557" level="INFO">Logging into '192.168.56.2:22' as 'oliveruhlar'.</msg>
+<msg timestamp="20201215 14:14:56.562" level="FAIL">timeout: timed out</msg>
+<status status="FAIL" starttime="20201215 14:14:53.557" endtime="20201215 14:14:56.562"></status>
 </kw>
 <kw name="Login With Public Key" library="SSHLibrary">
 <doc>Logs into the SSH server using key-based authentication.</doc>
@@ -17,11 +69,8 @@
 <arg>oliveruhlar</arg>
 <arg>w_rsa</arg>
 </arguments>
-<assign>
-<var>${output}</var>
-</assign>
-<msg timestamp="20201214 15:09:13.953" level="INFO">Logging into '192.168.56.2:22' as 'oliveruhlar'.</msg>
-<msg timestamp="20201214 15:09:15.198" level="INFO">Read output: Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-56-generic x86_64)
+<msg timestamp="20201215 14:15:06.563" level="INFO">Logging into '192.168.56.2:22' as 'oliveruhlar'.</msg>
+<msg timestamp="20201215 14:15:10.598" level="INFO">Read output: Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-56-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
  * Management:     https://landscape.canonical.com
@@ -31,14 +80,16 @@
 0 of these updates are security updates.
 
 Your Hardware Enablement Stack (HWE) is supported until April 2025.
-Last login: Mon Dec 14 15:04:09 2020 from 192.168.56.1
+Last login: Tue Dec 15 10:26:13 2020 from 192.168.56.1
 oliveruhlar@ubuntu1:~$</msg>
-<msg timestamp="20201214 15:09:15.199" level="INFO">${output} = Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-56-generic x86_64)
+<status status="PASS" starttime="20201215 14:15:06.563" endtime="20201215 14:15:10.598"></status>
+</kw>
+<msg timestamp="20201215 14:15:10.598" level="INFO">${output} = Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-56-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
  * Management:     https://landscape.canonical.com
  * Support:        https://ubuntu.c...</msg>
-<status status="PASS" starttime="20201214 15:09:13.953" endtime="20201214 15:09:15.199"></status>
+<status status="PASS" starttime="20201215 14:14:53.557" endtime="20201215 14:15:10.598"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -46,72 +97,702 @@ oliveruhlar@ubuntu1:~$</msg>
 <arg>${output}</arg>
 <arg>Welcome</arg>
 </arguments>
-<status status="PASS" starttime="20201214 15:09:15.201" endtime="20201214 15:09:15.203"></status>
+<status status="PASS" starttime="20201215 14:15:10.599" endtime="20201215 14:15:10.599"></status>
 </kw>
-<kw name="Execute Command" library="SSHLibrary">
-<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<kw name="Open Connection" library="SSHLibrary">
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
 <arguments>
-<arg>echo 'Hello John!'</arg>
-<arg>return_stderr=True</arg>
+<arg>192.168.56.3</arg>
+<arg>alias=vm2</arg>
+</arguments>
+<status status="PASS" starttime="20201215 14:15:10.600" endtime="20201215 14:15:10.600"></status>
+</kw>
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<arguments>
+<arg>2min</arg>
+<arg>10s</arg>
+<arg>Login With Public Key</arg>
+<arg>oliveruhlar</arg>
+<arg>vm_u2_rsa</arg>
 </arguments>
 <assign>
-<var>${stdout}</var>
-<var>${stderr}</var>
+<var>${output}</var>
 </assign>
-<msg timestamp="20201214 15:09:15.205" level="INFO">Executing command 'echo 'Hello John!''.</msg>
-<msg timestamp="20201214 15:09:15.222" level="INFO">Command exited with return code 0.</msg>
-<msg timestamp="20201214 15:09:15.223" level="INFO">${stdout} = Hello John!</msg>
-<msg timestamp="20201214 15:09:15.223" level="INFO">${stderr} = </msg>
-<status status="PASS" starttime="20201214 15:09:15.204" endtime="20201214 15:09:15.223"></status>
-</kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
+<kw name="Login With Public Key" library="SSHLibrary">
+<doc>Logs into the SSH server using key-based authentication.</doc>
 <arguments>
-<arg>${output}</arg>
+<arg>oliveruhlar</arg>
+<arg>vm_u2_rsa</arg>
 </arguments>
-<msg timestamp="20201214 15:09:15.234" level="INFO">Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-56-generic x86_64)
+<msg timestamp="20201215 14:15:10.601" level="INFO">Logging into '192.168.56.3:22' as 'oliveruhlar'.</msg>
+<msg timestamp="20201215 14:15:12.319" level="INFO">Read output: Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-54-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
  * Management:     https://landscape.canonical.com
  * Support:        https://ubuntu.com/advantage
 
-0 updates can be installed immediately.
-0 of these updates are security updates.
 
+255 updates can be installed immediately.
+113 of these updates are security updates.
+To see these additional updates run: apt list --upgradable
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
 Your Hardware Enablement Stack (HWE) is supported until April 2025.
-Last login: Mon Dec 14 15:04:09 2020 from 192.168.56.1
-oliveruhlar@ubuntu1:~$ </msg>
-<status status="PASS" starttime="20201214 15:09:15.233" endtime="20201214 15:09:15.235"></status>
+Last login: Tue Dec 15 10:26:53 2020 from 192.168.56.1
+oliveruhlar@ubuntu2:~$</msg>
+<status status="PASS" starttime="20201215 14:15:10.601" endtime="20201215 14:15:12.319"></status>
 </kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20201215 14:15:12.319" level="INFO">${output} = Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 5.4.0-54-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.c...</msg>
+<status status="PASS" starttime="20201215 14:15:10.600" endtime="20201215 14:15:12.319"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
 <arguments>
-<arg>${stdout}</arg>
+<arg>${output}</arg>
+<arg>Welcome</arg>
 </arguments>
-<msg timestamp="20201214 15:09:15.237" level="INFO">Hello John!</msg>
-<status status="PASS" starttime="20201214 15:09:15.236" endtime="20201214 15:09:15.238"></status>
+<status status="PASS" starttime="20201215 14:15:12.320" endtime="20201215 14:15:12.320"></status>
 </kw>
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
+<status status="PASS" starttime="20201215 14:14:53.555" endtime="20201215 14:15:12.320" critical="yes"></status>
+</test>
+<test id="s1-t2" name="NIC before setting IPs">
+<kw name="Switch Connection" library="SSHLibrary">
+<doc>Switches the active connection by index or alias.</doc>
+<arguments>
+<arg>vm1</arg>
+</arguments>
+<status status="PASS" starttime="20201215 14:15:12.321" endtime="20201215 14:15:12.322"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>ip addr</arg>
+<arg>return_stderr=True</arg>
+</arguments>
+<assign>
+<var>${stdout_vm1}</var>
+<var>${stderr}</var>
+</assign>
+<msg timestamp="20201215 14:15:12.322" level="INFO">Executing command 'ip addr'.</msg>
+<msg timestamp="20201215 14:15:12.339" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20201215 14:15:12.339" level="INFO">${stdout_vm1} = 1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lf...</msg>
+<msg timestamp="20201215 14:15:12.339" level="INFO">${stderr} = </msg>
+<status status="PASS" starttime="20201215 14:15:12.322" endtime="20201215 14:15:12.339"></status>
+</kw>
+<kw name="Should Be Empty" library="BuiltIn">
+<doc>Verifies that the given item is empty.</doc>
 <arguments>
 <arg>${stderr}</arg>
 </arguments>
-<msg timestamp="20201214 15:09:15.240" level="INFO"></msg>
-<status status="PASS" starttime="20201214 15:09:15.239" endtime="20201214 15:09:15.240"></status>
+<msg timestamp="20201215 14:15:12.339" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20201215 14:15:12.339" endtime="20201215 14:15:12.339"></status>
 </kw>
-<status status="PASS" starttime="20201214 15:09:13.950" endtime="20201214 15:09:15.242" critical="yes"></status>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${stdout_vm1}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:12.340" level="INFO">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp0s3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:c4:c2:1e brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic enp0s3
+       valid_lft 86393sec preferred_lft 86393sec
+    inet6 fe80::a00:27ff:fec4:c21e/64 scope link 
+       valid_lft forever preferred_lft forever
+3: enp0s8: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:ba:8d:08 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.56.2/24 brd 192.168.56.255 scope global enp0s8
+       valid_lft forever preferred_lft forever
+    inet6 fe80::a00:27ff:feba:8d08/64 scope link 
+       valid_lft forever preferred_lft forever
+4: enp0s9: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 08:00:27:7e:99:5d brd ff:ff:ff:ff:ff:ff</msg>
+<status status="PASS" starttime="20201215 14:15:12.340" endtime="20201215 14:15:12.340"></status>
+</kw>
+<kw name="Switch Connection" library="SSHLibrary">
+<doc>Switches the active connection by index or alias.</doc>
+<arguments>
+<arg>vm2</arg>
+</arguments>
+<status status="PASS" starttime="20201215 14:15:12.340" endtime="20201215 14:15:12.340"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>ip addr</arg>
+<arg>return_stderr=True</arg>
+</arguments>
+<assign>
+<var>${stdout_vm2}</var>
+<var>${stderr}</var>
+</assign>
+<msg timestamp="20201215 14:15:12.341" level="INFO">Executing command 'ip addr'.</msg>
+<msg timestamp="20201215 14:15:12.375" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20201215 14:15:12.375" level="INFO">${stdout_vm2} = 1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lf...</msg>
+<msg timestamp="20201215 14:15:12.375" level="INFO">${stderr} = </msg>
+<status status="PASS" starttime="20201215 14:15:12.341" endtime="20201215 14:15:12.375"></status>
+</kw>
+<kw name="Should Be Empty" library="BuiltIn">
+<doc>Verifies that the given item is empty.</doc>
+<arguments>
+<arg>${stderr}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:12.376" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20201215 14:15:12.376" endtime="20201215 14:15:12.376"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${stdout_vm2}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:12.377" level="INFO">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp0s3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:2c:b3:85 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic enp0s3
+       valid_lft 86394sec preferred_lft 86394sec
+    inet6 fe80::a00:27ff:fe2c:b385/64 scope link 
+       valid_lft forever preferred_lft forever
+3: enp0s8: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:f9:ea:d5 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.56.3/24 brd 192.168.56.255 scope global enp0s8
+       valid_lft forever preferred_lft forever
+    inet6 fe80::a00:27ff:fef9:ead5/64 scope link 
+       valid_lft forever preferred_lft forever
+4: enp0s9: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 08:00:27:56:81:76 brd ff:ff:ff:ff:ff:ff</msg>
+<status status="PASS" starttime="20201215 14:15:12.376" endtime="20201215 14:15:12.377"></status>
+</kw>
+<status status="PASS" starttime="20201215 14:15:12.321" endtime="20201215 14:15:12.377" critical="yes"></status>
 </test>
-<status status="PASS" starttime="20201214 15:09:13.667" endtime="20201214 15:09:15.247"></status>
+<test id="s1-t3" name="Ping before setting IPs">
+<kw name="Switch Connection" library="SSHLibrary">
+<doc>Switches the active connection by index or alias.</doc>
+<arguments>
+<arg>vm1</arg>
+</arguments>
+<status status="PASS" starttime="20201215 14:15:12.379" endtime="20201215 14:15:12.379"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>ping -c 3 10.2.0.24</arg>
+<arg>return_stderr=True</arg>
+</arguments>
+<assign>
+<var>${stdout_vm1}</var>
+<var>${stderr}</var>
+</assign>
+<msg timestamp="20201215 14:15:12.380" level="INFO">Executing command 'ping -c 3 10.2.0.24'.</msg>
+<msg timestamp="20201215 14:15:24.428" level="INFO">Command exited with return code 1.</msg>
+<msg timestamp="20201215 14:15:24.429" level="INFO">${stdout_vm1} = PING 10.2.0.24 (10.2.0.24) 56(84) bytes of data.
+
+--- 10.2.0.24 ping statistics ---
+3 packets transmitted, 0 received, 100% packet loss, time 2028ms</msg>
+<msg timestamp="20201215 14:15:24.429" level="INFO">${stderr} = </msg>
+<status status="PASS" starttime="20201215 14:15:12.380" endtime="20201215 14:15:24.429"></status>
+</kw>
+<kw name="Should Be Empty" library="BuiltIn">
+<doc>Verifies that the given item is empty.</doc>
+<arguments>
+<arg>${stderr}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:24.431" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20201215 14:15:24.430" endtime="20201215 14:15:24.431"></status>
+</kw>
+<kw name="Should Contain X Times" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` ``count`` times.</doc>
+<arguments>
+<arg>${stdout_vm1}</arg>
+<arg>100% packet loss</arg>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20201215 14:15:24.433" level="INFO">Item found from container 1 time.</msg>
+<status status="PASS" starttime="20201215 14:15:24.432" endtime="20201215 14:15:24.433"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${stdout_vm1}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:24.434" level="INFO">PING 10.2.0.24 (10.2.0.24) 56(84) bytes of data.
+
+--- 10.2.0.24 ping statistics ---
+3 packets transmitted, 0 received, 100% packet loss, time 2028ms</msg>
+<status status="PASS" starttime="20201215 14:15:24.434" endtime="20201215 14:15:24.435"></status>
+</kw>
+<kw name="Switch Connection" library="SSHLibrary">
+<doc>Switches the active connection by index or alias.</doc>
+<arguments>
+<arg>vm2</arg>
+</arguments>
+<status status="PASS" starttime="20201215 14:15:24.435" endtime="20201215 14:15:24.436"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>ping -c 3 10.2.0.23</arg>
+<arg>return_stderr=True</arg>
+</arguments>
+<assign>
+<var>${stdout_vm2}</var>
+<var>${stderr}</var>
+</assign>
+<msg timestamp="20201215 14:15:24.437" level="INFO">Executing command 'ping -c 3 10.2.0.23'.</msg>
+<msg timestamp="20201215 14:15:36.500" level="INFO">Command exited with return code 1.</msg>
+<msg timestamp="20201215 14:15:36.501" level="INFO">${stdout_vm2} = PING 10.2.0.23 (10.2.0.23) 56(84) bytes of data.
+
+--- 10.2.0.23 ping statistics ---
+3 packets transmitted, 0 received, 100% packet loss, time 2029ms</msg>
+<msg timestamp="20201215 14:15:36.501" level="INFO">${stderr} = </msg>
+<status status="PASS" starttime="20201215 14:15:24.437" endtime="20201215 14:15:36.501"></status>
+</kw>
+<kw name="Should Be Empty" library="BuiltIn">
+<doc>Verifies that the given item is empty.</doc>
+<arguments>
+<arg>${stderr}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:36.503" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20201215 14:15:36.503" endtime="20201215 14:15:36.503"></status>
+</kw>
+<kw name="Should Contain X Times" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` ``count`` times.</doc>
+<arguments>
+<arg>${stdout_vm2}</arg>
+<arg>100% packet loss</arg>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20201215 14:15:36.505" level="INFO">Item found from container 1 time.</msg>
+<status status="PASS" starttime="20201215 14:15:36.504" endtime="20201215 14:15:36.505"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${stdout_vm2}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:36.507" level="INFO">PING 10.2.0.23 (10.2.0.23) 56(84) bytes of data.
+
+--- 10.2.0.23 ping statistics ---
+3 packets transmitted, 0 received, 100% packet loss, time 2029ms</msg>
+<status status="PASS" starttime="20201215 14:15:36.507" endtime="20201215 14:15:36.508"></status>
+</kw>
+<status status="PASS" starttime="20201215 14:15:12.378" endtime="20201215 14:15:36.509" critical="yes"></status>
+</test>
+<test id="s1-t4" name="Set IPs">
+<kw name="Switch Connection" library="SSHLibrary">
+<doc>Switches the active connection by index or alias.</doc>
+<arguments>
+<arg>vm1</arg>
+</arguments>
+<status status="PASS" starttime="20201215 14:15:36.513" endtime="20201215 14:15:36.514"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>sudo ifconfig enp0s9 10.2.0.23 up</arg>
+<arg>return_stderr=True</arg>
+</arguments>
+<assign>
+<var>${stdout_vm1}</var>
+<var>${stderr}</var>
+</assign>
+<msg timestamp="20201215 14:15:36.515" level="INFO">Executing command 'sudo ifconfig enp0s9 10.2.0.23 up'.</msg>
+<msg timestamp="20201215 14:15:36.552" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20201215 14:15:36.552" level="INFO">${stdout_vm1} = </msg>
+<msg timestamp="20201215 14:15:36.552" level="INFO">${stderr} = </msg>
+<status status="PASS" starttime="20201215 14:15:36.515" endtime="20201215 14:15:36.552"></status>
+</kw>
+<kw name="Should Be Empty" library="BuiltIn">
+<doc>Verifies that the given item is empty.</doc>
+<arguments>
+<arg>${stderr}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:36.553" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20201215 14:15:36.552" endtime="20201215 14:15:36.553"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${stdout_vm1}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:36.553" level="INFO"></msg>
+<status status="PASS" starttime="20201215 14:15:36.553" endtime="20201215 14:15:36.553"></status>
+</kw>
+<kw name="Switch Connection" library="SSHLibrary">
+<doc>Switches the active connection by index or alias.</doc>
+<arguments>
+<arg>vm2</arg>
+</arguments>
+<status status="PASS" starttime="20201215 14:15:36.554" endtime="20201215 14:15:36.554"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>sudo ifconfig enp0s9 10.2.0.24 up</arg>
+<arg>return_stderr=True</arg>
+</arguments>
+<assign>
+<var>${stdout_vm2}</var>
+<var>${stderr}</var>
+</assign>
+<msg timestamp="20201215 14:15:36.554" level="INFO">Executing command 'sudo ifconfig enp0s9 10.2.0.24 up'.</msg>
+<msg timestamp="20201215 14:15:36.604" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20201215 14:15:36.604" level="INFO">${stdout_vm2} = </msg>
+<msg timestamp="20201215 14:15:36.604" level="INFO">${stderr} = </msg>
+<status status="PASS" starttime="20201215 14:15:36.554" endtime="20201215 14:15:36.604"></status>
+</kw>
+<kw name="Should Be Empty" library="BuiltIn">
+<doc>Verifies that the given item is empty.</doc>
+<arguments>
+<arg>${stderr}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:36.605" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20201215 14:15:36.605" endtime="20201215 14:15:36.605"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${stdout_vm2}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:36.605" level="INFO"></msg>
+<status status="PASS" starttime="20201215 14:15:36.605" endtime="20201215 14:15:36.605"></status>
+</kw>
+<status status="PASS" starttime="20201215 14:15:36.510" endtime="20201215 14:15:36.606" critical="yes"></status>
+</test>
+<test id="s1-t5" name="Ping after setting IPs">
+<kw name="Switch Connection" library="SSHLibrary">
+<doc>Switches the active connection by index or alias.</doc>
+<arguments>
+<arg>vm1</arg>
+</arguments>
+<status status="PASS" starttime="20201215 14:15:36.608" endtime="20201215 14:15:36.608"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>ping -c 3 10.2.0.24</arg>
+<arg>return_stderr=True</arg>
+</arguments>
+<assign>
+<var>${stdout_vm1}</var>
+<var>${stderr}</var>
+</assign>
+<msg timestamp="20201215 14:15:36.608" level="INFO">Executing command 'ping -c 3 10.2.0.24'.</msg>
+<msg timestamp="20201215 14:15:38.666" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20201215 14:15:38.666" level="INFO">${stdout_vm1} = PING 10.2.0.24 (10.2.0.24) 56(84) bytes of data.
+64 bytes from 10.2.0.24: icmp_seq=1 ttl=64 time=0.655 ms
+64 bytes from 10.2.0.24: icmp_seq=2 ttl=64 time=0.662 ms
+64 bytes from 10.2.0.24: icmp_seq=3 t...</msg>
+<msg timestamp="20201215 14:15:38.666" level="INFO">${stderr} = </msg>
+<status status="PASS" starttime="20201215 14:15:36.608" endtime="20201215 14:15:38.666"></status>
+</kw>
+<kw name="Should Be Empty" library="BuiltIn">
+<doc>Verifies that the given item is empty.</doc>
+<arguments>
+<arg>${stderr}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:38.667" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20201215 14:15:38.667" endtime="20201215 14:15:38.667"></status>
+</kw>
+<kw name="Should Contain X Times" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` ``count`` times.</doc>
+<arguments>
+<arg>${stdout_vm1}</arg>
+<arg>0% packet loss</arg>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20201215 14:15:38.668" level="INFO">Item found from container 1 time.</msg>
+<status status="PASS" starttime="20201215 14:15:38.668" endtime="20201215 14:15:38.668"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${stdout_vm1}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:38.669" level="INFO">PING 10.2.0.24 (10.2.0.24) 56(84) bytes of data.
+64 bytes from 10.2.0.24: icmp_seq=1 ttl=64 time=0.655 ms
+64 bytes from 10.2.0.24: icmp_seq=2 ttl=64 time=0.662 ms
+64 bytes from 10.2.0.24: icmp_seq=3 ttl=64 time=0.485 ms
+
+--- 10.2.0.24 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 3374ms
+rtt min/avg/max/mdev = 0.485/0.600/0.662/0.081 ms</msg>
+<status status="PASS" starttime="20201215 14:15:38.668" endtime="20201215 14:15:38.669"></status>
+</kw>
+<kw name="Switch Connection" library="SSHLibrary">
+<doc>Switches the active connection by index or alias.</doc>
+<arguments>
+<arg>vm2</arg>
+</arguments>
+<status status="PASS" starttime="20201215 14:15:38.669" endtime="20201215 14:15:38.669"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>ping -c 3 10.2.0.23</arg>
+<arg>return_stderr=True</arg>
+</arguments>
+<assign>
+<var>${stdout_vm2}</var>
+<var>${stderr}</var>
+</assign>
+<msg timestamp="20201215 14:15:38.670" level="INFO">Executing command 'ping -c 3 10.2.0.23'.</msg>
+<msg timestamp="20201215 14:15:40.720" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20201215 14:15:40.720" level="INFO">${stdout_vm2} = PING 10.2.0.23 (10.2.0.23) 56(84) bytes of data.
+64 bytes from 10.2.0.23: icmp_seq=1 ttl=64 time=0.482 ms
+64 bytes from 10.2.0.23: icmp_seq=2 ttl=64 time=0.645 ms
+64 bytes from 10.2.0.23: icmp_seq=3 t...</msg>
+<msg timestamp="20201215 14:15:40.721" level="INFO">${stderr} = </msg>
+<status status="PASS" starttime="20201215 14:15:38.670" endtime="20201215 14:15:40.721"></status>
+</kw>
+<kw name="Should Be Empty" library="BuiltIn">
+<doc>Verifies that the given item is empty.</doc>
+<arguments>
+<arg>${stderr}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:40.722" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20201215 14:15:40.722" endtime="20201215 14:15:40.722"></status>
+</kw>
+<kw name="Should Contain X Times" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` ``count`` times.</doc>
+<arguments>
+<arg>${stdout_vm2}</arg>
+<arg>0% packet loss</arg>
+<arg>1</arg>
+</arguments>
+<msg timestamp="20201215 14:15:40.723" level="INFO">Item found from container 1 time.</msg>
+<status status="PASS" starttime="20201215 14:15:40.723" endtime="20201215 14:15:40.723"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${stdout_vm2}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:40.725" level="INFO">PING 10.2.0.23 (10.2.0.23) 56(84) bytes of data.
+64 bytes from 10.2.0.23: icmp_seq=1 ttl=64 time=0.482 ms
+64 bytes from 10.2.0.23: icmp_seq=2 ttl=64 time=0.645 ms
+64 bytes from 10.2.0.23: icmp_seq=3 ttl=64 time=0.571 ms
+
+--- 10.2.0.23 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2040ms
+rtt min/avg/max/mdev = 0.482/0.566/0.645/0.066 ms</msg>
+<status status="PASS" starttime="20201215 14:15:40.724" endtime="20201215 14:15:40.725"></status>
+</kw>
+<status status="PASS" starttime="20201215 14:15:36.607" endtime="20201215 14:15:40.726" critical="yes"></status>
+</test>
+<test id="s1-t6" name="NIC after setting IPs">
+<kw name="Switch Connection" library="SSHLibrary">
+<doc>Switches the active connection by index or alias.</doc>
+<arguments>
+<arg>vm1</arg>
+</arguments>
+<status status="PASS" starttime="20201215 14:15:40.731" endtime="20201215 14:15:40.731"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>ip addr</arg>
+<arg>return_stderr=True</arg>
+</arguments>
+<assign>
+<var>${stdout_vm1}</var>
+<var>${stderr}</var>
+</assign>
+<msg timestamp="20201215 14:15:40.732" level="INFO">Executing command 'ip addr'.</msg>
+<msg timestamp="20201215 14:15:40.745" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20201215 14:15:40.745" level="INFO">${stdout_vm1} = 1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lf...</msg>
+<msg timestamp="20201215 14:15:40.745" level="INFO">${stderr} = </msg>
+<status status="PASS" starttime="20201215 14:15:40.732" endtime="20201215 14:15:40.745"></status>
+</kw>
+<kw name="Should Be Empty" library="BuiltIn">
+<doc>Verifies that the given item is empty.</doc>
+<arguments>
+<arg>${stderr}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:40.751" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20201215 14:15:40.750" endtime="20201215 14:15:40.751"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${stdout_vm1}</arg>
+<arg>10.2.0.23</arg>
+</arguments>
+<status status="PASS" starttime="20201215 14:15:40.751" endtime="20201215 14:15:40.752"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${stdout_vm1}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:40.753" level="INFO">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp0s3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:c4:c2:1e brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic enp0s3
+       valid_lft 86364sec preferred_lft 86364sec
+    inet6 fe80::a00:27ff:fec4:c21e/64 scope link 
+       valid_lft forever preferred_lft forever
+3: enp0s8: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:ba:8d:08 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.56.2/24 brd 192.168.56.255 scope global enp0s8
+       valid_lft forever preferred_lft forever
+    inet6 fe80::a00:27ff:feba:8d08/64 scope link 
+       valid_lft forever preferred_lft forever
+4: enp0s9: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:7e:99:5d brd ff:ff:ff:ff:ff:ff
+    inet 10.2.0.23/8 brd 10.255.255.255 scope global enp0s9
+       valid_lft forever preferred_lft forever
+    inet6 fe80::a00:27ff:fe7e:995d/64 scope link 
+       valid_lft forever preferred_lft forever</msg>
+<status status="PASS" starttime="20201215 14:15:40.752" endtime="20201215 14:15:40.753"></status>
+</kw>
+<kw name="Switch Connection" library="SSHLibrary">
+<doc>Switches the active connection by index or alias.</doc>
+<arguments>
+<arg>vm2</arg>
+</arguments>
+<status status="PASS" starttime="20201215 14:15:40.754" endtime="20201215 14:15:40.754"></status>
+</kw>
+<kw name="Execute Command" library="SSHLibrary">
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<arguments>
+<arg>ip addr</arg>
+<arg>return_stderr=True</arg>
+</arguments>
+<assign>
+<var>${stdout_vm2}</var>
+<var>${stderr}</var>
+</assign>
+<msg timestamp="20201215 14:15:40.755" level="INFO">Executing command 'ip addr'.</msg>
+<msg timestamp="20201215 14:15:40.770" level="INFO">Command exited with return code 0.</msg>
+<msg timestamp="20201215 14:15:40.770" level="INFO">${stdout_vm2} = 1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lf...</msg>
+<msg timestamp="20201215 14:15:40.770" level="INFO">${stderr} = </msg>
+<status status="PASS" starttime="20201215 14:15:40.754" endtime="20201215 14:15:40.770"></status>
+</kw>
+<kw name="Should Be Empty" library="BuiltIn">
+<doc>Verifies that the given item is empty.</doc>
+<arguments>
+<arg>${stderr}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:40.774" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20201215 14:15:40.774" endtime="20201215 14:15:40.774"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${stdout_vm2}</arg>
+<arg>10.2.0.24</arg>
+</arguments>
+<status status="PASS" starttime="20201215 14:15:40.775" endtime="20201215 14:15:40.775"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${stdout_vm2}</arg>
+</arguments>
+<msg timestamp="20201215 14:15:40.776" level="INFO">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp0s3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:2c:b3:85 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic enp0s3
+       valid_lft 86365sec preferred_lft 86365sec
+    inet6 fe80::a00:27ff:fe2c:b385/64 scope link 
+       valid_lft forever preferred_lft forever
+3: enp0s8: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:f9:ea:d5 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.56.3/24 brd 192.168.56.255 scope global enp0s8
+       valid_lft forever preferred_lft forever
+    inet6 fe80::a00:27ff:fef9:ead5/64 scope link 
+       valid_lft forever preferred_lft forever
+4: enp0s9: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:56:81:76 brd ff:ff:ff:ff:ff:ff
+    inet 10.2.0.24/8 brd 10.255.255.255 scope global enp0s9
+       valid_lft forever preferred_lft forever
+    inet6 fe80::a00:27ff:fe56:8176/64 scope link 
+       valid_lft forever preferred_lft forever</msg>
+<status status="PASS" starttime="20201215 14:15:40.776" endtime="20201215 14:15:40.776"></status>
+</kw>
+<status status="PASS" starttime="20201215 14:15:40.730" endtime="20201215 14:15:40.777" critical="yes"></status>
+</test>
+<kw name="Teardown vms" type="teardown">
+<kw name="Close All Connections" library="SSHLibrary">
+<doc>Closes all open connections.</doc>
+<status status="PASS" starttime="20201215 14:15:40.779" endtime="20201215 14:15:40.780"></status>
+</kw>
+<kw name="Start Process" library="Process">
+<doc>Starts a new process on background.</doc>
+<arguments>
+<arg>C:\\Program Files\\Oracle\\VirtualBox\\VBoxManage.exe</arg>
+<arg>controlvm</arg>
+<arg>ubuntu_1</arg>
+<arg>poweroff</arg>
+</arguments>
+<msg timestamp="20201215 14:15:40.780" level="INFO">Starting process:
+"C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" controlvm ubuntu_1 poweroff</msg>
+<status status="PASS" starttime="20201215 14:15:40.780" endtime="20201215 14:15:40.783"></status>
+</kw>
+<kw name="Start Process" library="Process">
+<doc>Starts a new process on background.</doc>
+<arguments>
+<arg>C:\\Program Files\\Oracle\\VirtualBox\\VBoxManage.exe</arg>
+<arg>controlvm</arg>
+<arg>ubuntu_2</arg>
+<arg>poweroff</arg>
+</arguments>
+<msg timestamp="20201215 14:15:40.784" level="INFO">Starting process:
+"C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" controlvm ubuntu_2 poweroff</msg>
+<status status="PASS" starttime="20201215 14:15:40.783" endtime="20201215 14:15:40.787"></status>
+</kw>
+<status status="PASS" starttime="20201215 14:15:40.778" endtime="20201215 14:15:40.787"></status>
+</kw>
+<status status="PASS" starttime="20201215 14:14:53.423" endtime="20201215 14:15:40.787"></status>
 </suite>
 <statistics>
 <total>
-<stat pass="1" fail="0">Critical Tests</stat>
-<stat pass="1" fail="0">All Tests</stat>
+<stat pass="6" fail="0">Critical Tests</stat>
+<stat pass="6" fail="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat pass="1" fail="0" id="s1" name="Ssh Connect">Ssh Connect</stat>
+<stat pass="6" fail="0" id="s1" name="Ssh Connect">Ssh Connect</stat>
 </suite>
 </statistics>
 <errors>
