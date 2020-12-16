@@ -59,7 +59,7 @@ Ping after setting IPs
     Switch Connection  vm2
     ${stdout_vm2}	${stderr}=	Execute Command	 ping -c 3 10.2.0.23  return_stderr=True
     Should Be Empty	${stderr}
-    Should Contain X Times  ${stdout_vm2}  3received  1
+    Should Contain X Times  ${stdout_vm2}  3 received  1
     Log  ${stdout_vm2}
 
 NIC after setting IPs
